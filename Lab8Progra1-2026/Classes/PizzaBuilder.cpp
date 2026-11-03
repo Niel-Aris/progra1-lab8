@@ -34,6 +34,27 @@ bool PizzaBuilder::QuiereSeguirAgregandoTomate() {
     }
 }
 
+bool PizzaBuilder::QuiereSeguirAgregandoHierba() {
+    while (true) {
+        std::cout << "\n¿Quieres seguir agregando hierbas?" << std::endl;
+        std::cout << "1. Sí" << std::endl;
+        std::cout << "2. No, pasar al siguiente ingrediente" << std::endl;
+        std::cout << "Elige una opción: ";
+
+        std::string opcion;
+        std::getline(std::cin, opcion);
+
+        if (opcion == "1") {
+            return true;
+        }
+        if (opcion == "2") {
+            return false;
+        }
+
+        std::cout << "Opción no válida. Escribe 1 o 2." << std::endl;
+    }
+}
+
 void PizzaBuilder::BuildPizza() {
     std::cout << "=== Constructor de pizza ===" << std::endl;
     std::cout << "¡Vamos a armar tu pizza!" << std::endl;
@@ -58,7 +79,7 @@ void PizzaBuilder::IrAlSiguienteIngrediente() {
         // SelectMeat();
     case 4:
         // TODO hierbas: descomenta SelectHerb(). No pongas break todavía.
-        // SelectHerb();
+        SelectHerb();
     default:
         std::cout << "No existen más ingredientes para tu pizza." << std::endl;
         break;
@@ -174,10 +195,42 @@ void PizzaBuilder::SelectTomatoes() {
 // // Resolver.
 //}
 //
-//void PizzaBuilder::SelectHerb() {
-//    // Resolver.
-//}
-//
+void PizzaBuilder::SelectHerb() {
+    IngredientSelector<HerbsRepository> selector(herbRepo_, availableHerbs_, "hierba");
+    bool yaPregunto = false;
+
+    while (true) {
+        std::cout << "\n--- Selección de hierbas ---" << std::endl;
+        selector.DisplayAvailableIngredients();
+
+        std::cout << "\nIngresa el tipo de hierba (o 'listo' para terminar): ";
+        std::string userChoice;
+        std::getline(std::cin, userChoice);
+
+        if (userChoice == "listo" || userChoice == "LISTO") {
+            system("cls");
+            break;
+        }
+
+        bool exitosa = selector.AddIngredientToPizza(userChoice, selectedHerbs_);
+        if (exitosa) {
+            std::cout << "La selección fue exitosa." << std::endl;
+        } else {
+            std::cout << "La selección no fue exitosa." << std::endl;
+        }
+
+        if (exitosa && !yaPregunto) {
+            yaPregunto = true;
+            if (!QuiereSeguirAgregandoHierba()) {
+                system("cls");
+                return;
+            }
+        }
+
+        WaitForEnterAndClear();
+    }
+}
+
 //void PizzaBuilder::SelectMeat() {
 //    // Resolver.
 //}
