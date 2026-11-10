@@ -21,6 +21,9 @@
     <ClCompile Include="Classes\DataLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\HerbsRepository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Classes\IngredientSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,6 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\DataLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\HerbsRepository.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\IngredientSelector.h">
